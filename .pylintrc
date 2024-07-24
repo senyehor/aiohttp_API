@@ -1,0 +1,7 @@
+[MESSAGES CONTROL]
+# Disable the following messages:
+# C0114: missing module docstring
+# C0115: missing class docstring
+# C0116: missing function or method docstring
+# R0903: too few public methods
+disable=C0114,C0115,C0116,R0903
