@@ -1,0 +1,11 @@
+aiohttp
+
+peewee-async
+aiopg
+
+pytest
+factory_boy
+Faker
+pydantic-settings
+
+pip-tools
