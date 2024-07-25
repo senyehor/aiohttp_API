@@ -1,7 +1,8 @@
 from abc import ABC, abstractmethod
-from typing import Generic, Iterable, TypeVar
+from typing import Generic, Iterable, TypeAlias, TypeVar
 
 ModelObject = TypeVar('ModelObject')
+CreatedObjectId: TypeAlias = int
 
 
 class CRUDRepositoryBase(ABC, Generic[ModelObject]):
@@ -14,7 +15,7 @@ class CRUDRepositoryBase(ABC, Generic[ModelObject]):
         ...
 
     @abstractmethod
-    async def add_object(self, **fields):
+    async def add_object(self, **fields) -> CreatedObjectId:
         ...
 
     @abstractmethod
