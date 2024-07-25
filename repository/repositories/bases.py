@@ -20,10 +20,7 @@ class APIUserRepositoryBase(ABC):
         ...
 
     @abstractmethod
-    async def update_user(
-            self, user_id: int, new_email: str | None = None,
-            new_raw_password: str | None = None
-    ) -> bool:
+    async def update_user(self, user_id: int, **fields) -> bool:
         ...
 
     @abstractmethod
