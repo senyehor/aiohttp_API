@@ -3,6 +3,8 @@ from peewee_asyncext import PostgresqlExtDatabase
 
 from config import DB_SETTINGS, DBSettings
 
+DEFAULT_DB_CREATOR = PostgresqlExtDatabase  # pylint: disable=invalid-name
+
 
 def create_database_from_settings(settings: DBSettings, db_creator) -> AsyncDatabase:
     _ = settings
@@ -12,4 +14,4 @@ def create_database_from_settings(settings: DBSettings, db_creator) -> AsyncData
     )
 
 
-database = create_database_from_settings(DB_SETTINGS, PostgresqlExtDatabase)
+database = create_database_from_settings(DB_SETTINGS, DEFAULT_DB_CREATOR)
