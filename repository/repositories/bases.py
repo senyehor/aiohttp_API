@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Iterable
 
+from repository.types import UserID
 from repository.schemas import APIUser
 
 
@@ -11,7 +12,7 @@ class APIUserRepositoryBase(ABC):
         ...
 
     @abstractmethod
-    async def add_user(self, email: str, raw_password: str) -> bool:
+    async def add_user(self, email: str, raw_password: str) -> UserID:
         ...
 
     @abstractmethod
