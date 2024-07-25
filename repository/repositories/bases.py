@@ -1,28 +1,23 @@
 from abc import ABC, abstractmethod
-from typing import Iterable
-
-from repository.types import UserID
-from repository.schemas import UserSchema
 
 
-class UserRepositoryBase(ABC):
-
+class CRUDRepositoryBase(ABC):
     @abstractmethod
-    async def get_user_by_id(self, user_id: int) -> UserSchema:
+    async def get_object_by_id(self, object_id: int):
         ...
 
     @abstractmethod
-    async def add_user(self, email: str, raw_password: str) -> UserID:
+    async def add_object(self, **fields):
         ...
 
     @abstractmethod
-    async def get_users(self, page_number: int, page_size: int) -> Iterable[UserSchema]:
+    async def get_objects(self, page_number: int, page_size: int):
         ...
 
     @abstractmethod
-    async def update_user(self, user_id: int, **fields) -> bool:
+    async def update_object(self, object_id: int, **fields) -> bool:
         ...
 
     @abstractmethod
-    async def delete_user(self, user_id: int) -> bool:
+    async def delete_object(self, object_id: int) -> bool:
         ...
