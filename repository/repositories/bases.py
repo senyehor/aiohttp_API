@@ -1,9 +1,16 @@
 from abc import ABC, abstractmethod
+from typing import Generic, Iterable, TypeVar
+
+M = TypeVar('M')
 
 
-class CRUDRepositoryBase(ABC):
+class CRUDRepositoryBase(ABC, Generic[M]):
+    def __init__(self, model_class: type[M]):
+        # pylint: disable=unused-private-member
+        self._model_class = model_class
+
     @abstractmethod
-    async def get_object_by_id(self, object_id: int):
+    async def get_object_by_id(self, object_id: int) -> M:
         ...
 
     @abstractmethod
@@ -11,7 +18,7 @@ class CRUDRepositoryBase(ABC):
         ...
 
     @abstractmethod
-    async def get_objects(self, page_number: int, page_size: int):
+    async def get_objects(self, page_number: int, page_size: int) -> Iterable[M]:
         ...
 
     @abstractmethod
