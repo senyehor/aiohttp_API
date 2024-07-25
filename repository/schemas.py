@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class APIUser:
+class User:
     id: int
     email: str
     password: str

@@ -3,11 +3,11 @@ from typing import Iterable
 from peewee import Model
 from peewee_async import execute
 
-from db.models import APIUser
-from repository.repositories.bases import APIUserRepositoryBase
+from db.models import User
+from repository.repositories.bases import UserRepositoryBase
 
 
-class PeeWeeAPIUserRepository(APIUserRepositoryBase):
+class PeeWeeAPIUserRepository(UserRepositoryBase):
     """
     this is purely a layer between logic and database,
     no validation or error handling is done here
@@ -16,7 +16,7 @@ class PeeWeeAPIUserRepository(APIUserRepositoryBase):
     def __init__(self, user_model: type[Model]):
         self.__user_model = user_model
 
-    async def get_user_by_id(self, user_id: int) -> APIUser:
+    async def get_user_by_id(self, user_id: int) -> User:
         return await execute(
             self.__user_model
             .select()
@@ -28,7 +28,7 @@ class PeeWeeAPIUserRepository(APIUserRepositoryBase):
             self.__user_model.insert(email=email, password=raw_password)
         )
 
-    async def get_users(self, page_number: int, page_size: int) -> Iterable[APIUser]:
+    async def get_users(self, page_number: int, page_size: int) -> Iterable[User]:
         return await execute(
             self.__user_model
             .select()

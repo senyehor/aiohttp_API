@@ -9,7 +9,7 @@ class BaseModel(peewee.Model):
         database = database
 
 
-class APIUser(BaseModel):
+class User(BaseModel):
     email = CharField(unique=True, index=True, null=False)
     password = CharField(null=False)
 
@@ -23,4 +23,4 @@ class Device(BaseModel):
     login = CharField(null=False)
     password = CharField(null=False)
     location = ForeignKeyField(Location, backref='devices', null=False, on_delete='RESTRICT')
-    owner = ForeignKeyField(APIUser, backref='devices', null=False, on_delete='RESTRICT')
+    owner = ForeignKeyField(User, backref='devices', null=False, on_delete='RESTRICT')

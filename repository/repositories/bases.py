@@ -2,13 +2,13 @@ from abc import ABC, abstractmethod
 from typing import Iterable
 
 from repository.types import UserID
-from repository.schemas import APIUser
+from repository.schemas import User
 
 
-class APIUserRepositoryBase(ABC):
+class UserRepositoryBase(ABC):
 
     @abstractmethod
-    async def get_user_by_id(self, user_id: int) -> APIUser:
+    async def get_user_by_id(self, user_id: int) -> User:
         ...
 
     @abstractmethod
@@ -16,7 +16,7 @@ class APIUserRepositoryBase(ABC):
         ...
 
     @abstractmethod
-    async def get_users(self, page_number: int, page_size: int) -> Iterable[APIUser]:
+    async def get_users(self, page_number: int, page_size: int) -> Iterable[User]:
         ...
 
     @abstractmethod
