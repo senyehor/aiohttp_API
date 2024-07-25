@@ -4,6 +4,7 @@ peewee-async
 aiopg
 
 pytest
+pytest-asyncio
 factory_boy
 Faker
 pydantic-settings
