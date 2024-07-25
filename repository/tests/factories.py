@@ -1,14 +1,14 @@
 import factory
 from faker import Faker
 
-from repository.schemas import User
+from repository.schemas import UserSchema
 
 fake = Faker()
 
 
 class UserFactory(factory.Factory):
     class Meta:
-        model = User
+        model = UserSchema
 
     id = factory.Sequence(lambda n: n + 1)
     email = factory.LazyAttribute(lambda _: fake.email())

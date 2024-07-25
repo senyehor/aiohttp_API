@@ -2,14 +2,14 @@ from dataclasses import dataclass
 
 
 @dataclass
-class User:
+class UserSchema:
     id: int
     email: str
     password: str
 
 
 @dataclass
-class Device:
+class DeviceSchema:
     id: int
     type: str
     login: str
@@ -19,6 +19,6 @@ class Device:
 
 
 @dataclass
-class Location:
+class LocationSchema:
     id: str
     name: str
