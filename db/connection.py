@@ -1,11 +1,11 @@
 from peewee_async import AsyncDatabase
 from peewee_asyncext import PostgresqlExtDatabase
 
-from config import DB_SETTINGS, _DBSettings
+from config import DB_SETTINGS, DBSettings
 
 
 def create_database_from_settings(
-        settings: _DBSettings, db_creator: type[AsyncDatabase]
+        settings: DBSettings, db_creator: type[AsyncDatabase]
 ) -> AsyncDatabase:
     _ = settings
     return db_creator(

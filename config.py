@@ -3,7 +3,7 @@ from pathlib import Path
 from pydantic_settings import BaseSettings
 
 
-class _DBSettings(BaseSettings):
+class DBSettings(BaseSettings):
     db_user: str
     db_password: str
     db_name: str
@@ -15,4 +15,4 @@ class _DBSettings(BaseSettings):
         env_file_encoding = 'utf-8'
 
 
-DB_SETTINGS = _DBSettings()
+DB_SETTINGS = DBSettings()
