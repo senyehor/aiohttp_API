@@ -2,15 +2,18 @@ from dataclasses import dataclass
 
 
 @dataclass
-class UserSchema:
+class SchemaBase:
     id: int
+
+
+@dataclass
+class UserSchema(SchemaBase):
     email: str
     password: str
 
 
 @dataclass
-class DeviceSchema:
-    id: int
+class DeviceSchema(SchemaBase):
     type: str
     login: str
     password: str
@@ -19,6 +22,5 @@ class DeviceSchema:
 
 
 @dataclass
-class LocationSchema:
-    id: str
+class LocationSchema(SchemaBase):
     name: str
