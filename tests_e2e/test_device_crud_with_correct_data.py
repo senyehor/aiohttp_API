@@ -54,7 +54,7 @@ class TestDeviceCRUD:
             test_client: TestClient, user_committed: User,
             location_committed: Location, device: DeviceSchema
     ):
-        device = self.create_and_insert_devices(1, user_committed, location_committed)[0]
+        device = self.create_and_insert_device(user_committed, location_committed)
         response = await test_client.delete(DEVICES_API_PATH, json={'object_id': device.id})
         assert response.status == 200, 'wrong response code'
         device = await execute(
