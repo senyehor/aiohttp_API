@@ -1,9 +1,9 @@
-### A simple aiohttp API
+# A simple aiohttp API
 
 GET/POST/PATCH/DELETE available on /devices
 GET /devices/{device_id} for specific device info
 
-# How to run
+### How to run
 
 Clone repository
 
