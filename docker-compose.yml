@@ -17,8 +17,7 @@ services:
 
   db:
     container_name: db
-    build:
-      context: ./
+    image: db_for_api
     restart: unless-stopped
     environment:
       POSTGRES_USER: postgres
