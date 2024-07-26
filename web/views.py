@@ -9,3 +9,10 @@ from web.router import router
 @router.view('/devices')
 class DeviceCRUDView(CRUDViewBase):
     service = DeviceService()
+
+
+@router.get(r'/devices/{object_id:\d+}')
+async def device_info(request: Request):
+    service = DeviceService()
+    device_id = int(request.match_info['object_id'])
+    return json_response(await service.get_object_by_id(device_id))
