@@ -26,4 +26,7 @@ class Device(BaseModel):
     login = CharField(null=False)
     password = CharField(null=False)
     location = ForeignKeyField(Location, backref='devices', null=False, on_delete='RESTRICT')
-    owner = ForeignKeyField(User, backref='devices', null=False, on_delete='RESTRICT')
+    owner = ForeignKeyField(
+        User, backref='devices', null=False,
+        on_delete='RESTRICT', column_name='api_user_id'
+    )
