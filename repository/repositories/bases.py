@@ -6,9 +6,7 @@ CreatedObjectId: TypeAlias = int
 
 
 class CRUDRepositoryBase(ABC, Generic[ModelObject]):
-    def __init__(self, model_class: type[ModelObject]):
-        # pylint: disable=unused-private-member
-        self._model_class = model_class
+    model_class: type[ModelObject]
 
     @abstractmethod
     async def get_object_by_id(self, object_id: int) -> ModelObject:
