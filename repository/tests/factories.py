@@ -1,6 +1,6 @@
 from random import choice
 
-from factory import Factory, lazy_attribute, LazyAttribute, Sequence, SubFactory
+from factory import Factory, LazyAttribute, Sequence, SubFactory
 from faker import Faker
 
 from repository.schemas import DeviceSchema, LocationSchema, UserSchema
@@ -29,6 +29,7 @@ class DeviceFactory(Factory):
     class Meta:
         model = DeviceSchema
 
+    id = Sequence(lambda n: n + 1)
     type = LazyAttribute(lambda _: choice(['smart_watch', 'smart_fridge', 'smart_lamp']))
     login = LazyAttribute(lambda _: fake.word())
     password = LazyAttribute(lambda _: fake.password())
