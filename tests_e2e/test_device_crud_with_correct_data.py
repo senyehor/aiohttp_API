@@ -2,7 +2,7 @@ import pytest
 from aiohttp.test_utils import TestClient
 from peewee_async import execute
 
-from db.models import Device
+from db.models import Device, Location, User
 from logic.config import DEFAULT_PAGE_SIZE
 from repository.schemas import DeviceSchema, LocationSchema, UserSchema
 from repository.tests.factories import DeviceFactory
@@ -79,3 +79,6 @@ class TestDeviceCRUD:
             )
             devices.append(device)
         return devices
+
+    def create_and_insert_device(self, user: User, location: Location) -> DeviceSchema:
+        return self.create_and_insert_devices(1, user, location)[0]
