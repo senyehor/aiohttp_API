@@ -51,6 +51,21 @@ class TestDeviceCRUD:
         assert sorted(devices_on_page_ids) == sorted(devices_ids_received), \
             'received devices do not match expected'
 
+    async def test_delete_device(
+            self,
+            test_client: TestClient, user_committed: UserSchema,
+            location_committed: LocationSchema, device: DeviceSchema
+    ):
+        device = self.create_and_insert_devices(1, user_committed, location_committed)[0]
+        response = await test_client.delete(DEVICES_API_PATH, json={'object_id': device.id})
+        assert response.status == 200, 'wrong response code'
+        device = await execute(
+            Device
+            .select()
+            .where(Device.id == device.id)  # pylint: disable=no-member
+        )
+        assert len(device) == 0, 'device still present in database after deletion'
+
     def create_and_insert_devices(
             self, count: int, user: UserSchema, location: LocationSchema
     ) -> Iterable[DeviceSchema]:
