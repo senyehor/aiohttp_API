@@ -4,7 +4,7 @@ from peewee_async import execute
 
 from db.models import Device, Location, User
 from logic.config import DEFAULT_PAGE_SIZE
-from repository.schemas import DeviceSchema, LocationSchema, UserSchema
+from repository.schemas import DeviceSchema
 from repository.tests.factories import DeviceFactory
 from tests_e2e.utils import device_to_dict
 
@@ -16,7 +16,7 @@ class TestDeviceCRUD:
 
     async def test_create_device(
             self, test_client: TestClient, device: DeviceSchema,
-            user_committed: UserSchema, location_committed: LocationSchema,
+            user_committed: User, location_committed: Location
     ):
         device_data_correct = device_to_dict(device, user_committed, location_committed)
         response = await test_client.post(
@@ -37,8 +37,8 @@ class TestDeviceCRUD:
         assert len(device) == 1, 'device was not created'
 
     async def test_retrieve_devices_default_pagination(
-            self, test_client: TestClient, user_committed: UserSchema,
-            location_committed: LocationSchema
+            self, test_client: TestClient, user_committed: User,
+            location_committed: Location
     ):
         devices = self.create_and_insert_devices(13, user_committed, location_committed)
         response = await test_client.get(DEVICES_API_PATH)
@@ -51,8 +51,8 @@ class TestDeviceCRUD:
 
     async def test_delete_device(
             self,
-            test_client: TestClient, user_committed: UserSchema,
-            location_committed: LocationSchema, device: DeviceSchema
+            test_client: TestClient, user_committed: User,
+            location_committed: Location, device: DeviceSchema
     ):
         device = self.create_and_insert_devices(1, user_committed, location_committed)[0]
         response = await test_client.delete(DEVICES_API_PATH, json={'object_id': device.id})
@@ -92,7 +92,7 @@ class TestDeviceCRUD:
         assert len(device) == 1, 'device was not updated'
 
     def create_and_insert_devices(
-            self, count: int, user: UserSchema, location: LocationSchema
+            self, count: int, user: User, location: Location
     ) -> list[Device]:
         devices = []
         for _ in range(count):
