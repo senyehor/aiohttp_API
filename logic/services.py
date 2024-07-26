@@ -1,5 +1,6 @@
 from typing import Iterable
 
+from logic.config import FIRST_PAGE, DEFAULT_PAGE_SIZE
 from repository.repositories.bases import CRUDRepositoryBase
 from repository.repositories.implementations import (
     DevicePeeWeeRepository,
@@ -17,7 +18,10 @@ class CRUDServiceBase(CRUDOperationsBase):
     async def add_object(self, **fields) -> CreatedObjectId:
         return await self.repository.add_object(**fields)
 
-    async def get_objects(self, page_number: int, page_size: int) -> Iterable[ModelObject]:
+    async def get_objects(
+            self, page_number: int = FIRST_PAGE,
+            page_size: int = DEFAULT_PAGE_SIZE
+    ) -> Iterable[ModelObject]:
         return await self.repository.get_objects(page_number, page_size)
 
     async def update_object(self, object_id: int, **fields) -> bool:
