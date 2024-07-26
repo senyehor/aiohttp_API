@@ -1,0 +1,16 @@
+*.env
+venv/
+__pycache__
+*$py.class
+
+.idea/
+.vscode/
+.DS_Store
+.git/
+.gitignore
+db_docker/Dockerfile
+
+requirements.in
+.pylintrc
+*test*
+Dockerfile
