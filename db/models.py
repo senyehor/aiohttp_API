@@ -10,6 +10,9 @@ class BaseModel(peewee.Model):
 
 
 class User(BaseModel):
+    class Meta:
+        table_name = 'api_user'
+
     email = CharField(unique=True, index=True, null=False)
     password = CharField(null=False)
 
