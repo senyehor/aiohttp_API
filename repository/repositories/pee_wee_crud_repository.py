@@ -35,7 +35,7 @@ class PeeWeeCRUDRepository(CRUDRepositoryBase):
         updated_object_id = await execute(
             self.model_class
             .update(**fields)
-            .where(id=object_id)
+            .where(self.model_class.id == object_id)
         )
         return bool(updated_object_id)
 
