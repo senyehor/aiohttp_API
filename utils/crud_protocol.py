@@ -1,13 +1,13 @@
 from abc import ABC, abstractmethod
-from typing import Generic, Iterable, TypeAlias, TypeVar
+from typing import TypeAlias
 
-ModelObject = TypeVar('ModelObject')
 CreatedObjectId: TypeAlias = int
+OperationSucceeded: TypeAlias = bool
 
 
-class CRUDOperationsBase(ABC, Generic[ModelObject]):
+class CRUDOperationsBase(ABC):
     @abstractmethod
-    async def get_object_by_id(self, object_id: int) -> ModelObject:
+    async def get_object_by_id(self, object_id: int):
         ...
 
     @abstractmethod
@@ -15,13 +15,13 @@ class CRUDOperationsBase(ABC, Generic[ModelObject]):
         ...
 
     @abstractmethod
-    async def get_objects(self, page_number: int, page_size: int) -> Iterable[ModelObject]:
+    async def get_objects(self, page_number: int, page_size: int):
         ...
 
     @abstractmethod
-    async def update_object(self, object_id: int, **fields) -> bool:
+    async def update_object(self, object_id: int, **fields) -> OperationSucceeded:
         ...
 
     @abstractmethod
-    async def delete_object(self, object_id: int) -> bool:
+    async def delete_object(self, object_id: int) -> OperationSucceeded:
         ...
