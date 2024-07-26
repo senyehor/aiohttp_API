@@ -34,7 +34,7 @@ def user():
 
 @pytest.fixture()
 def user_committed(user):
-    User.create(email=user.email, password=user.password)
+    return User.create(email=user.email, password=user.password)
 
 
 @pytest.fixture()
