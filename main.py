@@ -10,6 +10,13 @@ from web.router import router
 async def create_app():
     app = Application()
     app.add_routes(router)
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+        handlers=[logging.StreamHandler(), logging.FileHandler('.logs')]
+    )
+    if DEBUG:
+        logging.basicConfig(level=logging.DEBUG)
     return app
 
 
