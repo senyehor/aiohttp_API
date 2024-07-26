@@ -45,7 +45,7 @@ class CRUDViewBase(View):
         object_id_to_delete = self.__get_object_id(data_from_user)
         deleted = await self.service.delete_object(object_id_to_delete)
         if deleted:
-            return json_response({'success': f'Successfully deleted {object_id_to_delete}'})
+            return json_response({'success': f'Successfully deleted, id: {object_id_to_delete}'})
         raise FailedToDeleteObject
 
     async def patch(self):
