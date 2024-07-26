@@ -30,6 +30,8 @@ frozenlist==1.4.1
     # via
     #   aiohttp
     #   aiosignal
+gunicorn==22.0.0
+    # via -r requirements.in
 idna==3.7
     # via yarl
 iniconfig==2.0.0
@@ -41,6 +43,7 @@ multidict==6.0.5
 packaging==24.1
     # via
     #   build
+    #   gunicorn
     #   pytest
 peewee==3.17.6
     # via peewee-async

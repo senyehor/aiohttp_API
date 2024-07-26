@@ -1,4 +1,5 @@
 aiohttp
+gunicorn
 
 peewee-async
 aiopg
