@@ -2,7 +2,8 @@ from json import JSONDecodeError
 from typing import Any, TypeAlias
 
 from aiohttp.web_exceptions import HTTPBadRequest
-from aiohttp.web_response import Response
+from aiohttp.web_request import Request
+from aiohttp.web_response import json_response
 from aiohttp.web_urldispatcher import View
 
 from logic.services import CRUDServiceBase
@@ -29,14 +30,14 @@ class CRUDViewBase(View):
         data_from_user = await self.__get_request_json()
         if page_number := self.__get_page_number(data_from_user):
             page_size = self.__get_page_size(data_from_user)
-            return self.service.get_objects(page_number, page_size)
-        return await self.service.get_objects()
+            return await self.service.get_objects(page_number, page_size)
+        return json_response(await self.service.get_objects())
 
     async def post(self):
         """create an objects"""
         data_from_user = await self.__get_request_json()
         created_object_id = await self.service.add_object(**data_from_user)
-        return Response(text=f'Successfully created, id: {created_object_id}')
+        return json_response({'success': f'Successfully created, id: {created_object_id}'})
 
     async def delete(self):
         """delete an object"""
@@ -44,7 +45,7 @@ class CRUDViewBase(View):
         object_id_to_delete = self.__get_object_id(data_from_user)
         deleted = await self.service.delete_object(object_id_to_delete)
         if deleted:
-            return Response(text='Successfully deleted')
+            return json_response({'success': f'Successfully deleted {object_id_to_delete}'})
         raise FailedToDeleteObject
 
     async def patch(self):
@@ -59,7 +60,7 @@ class CRUDViewBase(View):
             object_id_to_update, **data_without_object_id
         )
         if updated:
-            return Response(text='Successfully updated')
+            return json_response({'success': 'Successfully updated'})
         raise FailedToUpdateObject
 
     async def __get_request_json(self) -> Json:
