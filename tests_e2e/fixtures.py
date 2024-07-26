@@ -1,6 +1,5 @@
 import pytest
 import pytest_asyncio
-from pytest_aiohttp.plugin import aiohttp_client
 
 from db.for_test_only import _flush_db, _setup_test_db, _teardown_test_db
 from db.models import Location, User
@@ -22,9 +21,8 @@ async def flush_db():
 
 
 @pytest_asyncio.fixture(scope='module')
-async def client():
-    app = await create_app()
-    return await aiohttp_client(app)
+async def app():
+    return await create_app()
 
 
 @pytest.fixture()
