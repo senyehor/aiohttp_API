@@ -11,7 +11,8 @@ Clone repository
 git clone https://github.com/senyehor/aiohttp_API.git
 ```
 
-install [docker](https://docs.docker.com/engine/install/), if not installed
+install [docker](https://docs.docker.com/engine/install/)
+
 run this commands
 
 ```
