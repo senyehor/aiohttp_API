@@ -18,6 +18,12 @@ Json: TypeAlias = dict[str, Any]
 class CRUDViewBase(View):
     service: CRUDServiceBase
 
+    def __init__(self, request: Request, service: CRUDServiceBase = None) -> None:
+        super().__init__(request)
+        self.service = service or self.__class__.service
+        if not self.service:
+            raise ValueError('service must be either passed or set at a child class')
+
     async def get(self):
         """provides a list of objects"""
         data_from_user = await self.__get_request_json()
