@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from peewee import Database
-from peewee_async import AsyncDatabase
+from peewee_async import AsyncDatabase, execute
 
 from config import DBSettings
 from db.connection import create_database_from_settings, DEFAULT_DB_CREATOR
@@ -37,3 +37,11 @@ def _teardown_test_db():
     """drop tables and close db"""
     _TEST_DB.drop_tables(_MODELS)
     _TEST_DB.close()
+
+
+async def _flush_db():
+    for model in _MODELS:
+        await execute(
+            model
+            .delete()
+        )
