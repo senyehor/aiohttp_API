@@ -1,9 +1,13 @@
+from typing import Iterable
+
 import pytest
 from aiohttp.test_utils import TestClient
 from peewee_async import execute
 
 from db.models import Device
+from logic.config import DEFAULT_PAGE_SIZE
 from repository.schemas import DeviceSchema, LocationSchema, UserSchema
+from repository.tests.factories import DeviceFactory
 from tests_e2e.utils import device_to_dict
 
 DEVICES_API_PATH = '/devices'
@@ -33,3 +37,32 @@ class TestDeviceCRUD:
             )
         )
         assert len(device) == 1, 'device was not created'
+
+    async def test_retrieve_devices_default_pagination(
+            self, test_client: TestClient, user_committed: UserSchema,
+            location_committed: LocationSchema
+    ):
+        devices = self.create_and_insert_devices(13, user_committed, location_committed)
+        response = await test_client.get(DEVICES_API_PATH)
+        assert response.status == 200, 'wrong response code'
+        content = await response.json()
+        devices_on_page_ids = [device.id for device in devices[:DEFAULT_PAGE_SIZE]]
+        devices_ids_received = [device['id'] for device in content]
+        assert sorted(devices_on_page_ids) == sorted(devices_ids_received), \
+            'received devices do not match expected'
+
+    def create_and_insert_devices(
+            self, count: int, user: UserSchema, location: LocationSchema
+    ) -> Iterable[DeviceSchema]:
+        devices = []
+        for _ in range(count):
+            device = DeviceFactory(
+                location=location,
+                owner=user
+            )
+            device = Device.create(
+                type=device.type, login=device.login, password=device.password,
+                owner=user, location=location
+            )
+            devices.append(device)
+        return devices
