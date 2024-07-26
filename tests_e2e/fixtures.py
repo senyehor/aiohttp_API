@@ -3,7 +3,7 @@ import pytest_asyncio
 from pytest_aiohttp.plugin import aiohttp_client
 
 from db.for_test_only import _flush_db, _setup_test_db, _teardown_test_db
-from db.models import User
+from db.models import Location, User
 from main import create_app
 from repository.tests.factories import DeviceFactory, LocationFactory, UserFactory
 
@@ -44,7 +44,7 @@ def location():
 
 @pytest.fixture()
 def location_committed(location):
-    User.create(name=location.name)
+    return Location.create(name=location.name)
 
 
 @pytest.fixture()
