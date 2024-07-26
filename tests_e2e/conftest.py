@@ -7,7 +7,7 @@ from main import create_app
 from repository.tests.factories import DeviceFactory, LocationFactory, UserFactory
 
 
-@pytest.fixture(scope='module')
+@pytest.fixture(scope='module', autouse=True)
 def create_test_db():
     _setup_test_db()
     yield
