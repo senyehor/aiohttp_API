@@ -31,10 +31,10 @@ class CRUDServiceBase(CRUDOperationsBase):
     ) -> Iterable[ModelObject]:
         return await self.repository.get_objects(page_number, page_size)
 
-    async def update_object(self, object_id: int, **fields) -> bool:
+    async def update_object(self, object_id: int, **fields) -> OperationSucceeded:
         return await self.repository.update_object(object_id, **fields)
 
-    async def delete_object(self, object_id: int) -> bool:
+    async def delete_object(self, object_id: int) -> OperationSucceeded:
         return await self.repository.delete_object(object_id)
 
 
