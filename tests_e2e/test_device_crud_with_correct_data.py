@@ -66,7 +66,7 @@ class TestDeviceCRUD:
 
     def create_and_insert_devices(
             self, count: int, user: UserSchema, location: LocationSchema
-    ) -> list[DeviceSchema]:
+    ) -> list[Device]:
         devices = []
         for _ in range(count):
             device = DeviceFactory(
