@@ -1,5 +1,3 @@
-from typing import Iterable
-
 import pytest
 from aiohttp.test_utils import TestClient
 from peewee_async import execute
@@ -68,7 +66,7 @@ class TestDeviceCRUD:
 
     def create_and_insert_devices(
             self, count: int, user: UserSchema, location: LocationSchema
-    ) -> Iterable[DeviceSchema]:
+    ) -> list[DeviceSchema]:
         devices = []
         for _ in range(count):
             device = DeviceFactory(
