@@ -1,18 +1,12 @@
-from pathlib import Path
-
-from pydantic_settings import BaseSettings
+import os
 
 
-class DBSettings(BaseSettings):
-    db_user: str
-    db_password: str
-    db_name: str
-    db_host: str
-    db_port: int
-
-    class Config:
-        env_file = f'{Path(__file__).resolve().parent}/dev.env'
-        env_file_encoding = 'utf-8'
+class DBSettings:
+    db_user: str = os.getenv('DB_USER')
+    db_password: str = os.getenv('DB_PASSWORD')
+    db_name: str = os.getenv('DB_NAME')
+    db_host: str = os.getenv('DB_HOST')
+    db_port: int = int(os.getenv('DB_PORT'))
 
 
 DB_SETTINGS = DBSettings()
