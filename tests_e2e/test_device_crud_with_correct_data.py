@@ -64,6 +64,33 @@ class TestDeviceCRUD:
         )
         assert len(device) == 0, 'device still present in database after deletion'
 
+    async def test_update_device(
+            self, test_client: TestClient,
+            user_committed: User, location_committed: Location,
+    ):
+        device = self.create_and_insert_device(user_committed, location_committed)
+        device_data = device_to_dict(device, user_committed, location_committed)
+        device_update_data = {
+            key: value + '_updated' for key, value in device_data.items()
+            if key not in ('location_id', 'api_user_id')
+        }
+        device_update_data['object_id'] = device.id
+        response = await test_client.patch(DEVICES_API_PATH, json=device_update_data)
+        assert response.status == 200, 'wrong status code'
+        device = await execute(
+            Device
+            .select()
+            .where(
+                Device.id == device.id,  # pylint: disable=no-member
+                Device.type == device_update_data['type'],
+                Device.login == device_update_data['login'],
+                Device.password == device_update_data['password'],
+                Device.owner == user_committed,
+                Device.location == location_committed
+            )
+        )
+        assert len(device) == 1, 'device was not updated'
+
     def create_and_insert_devices(
             self, count: int, user: UserSchema, location: LocationSchema
     ) -> list[Device]:
