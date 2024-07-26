@@ -35,13 +35,3 @@ class DeviceFactory(Factory):
     password = LazyAttribute(lambda _: fake.password())
     location: LocationFactory = SubFactory(LocationFactory)
     owner: UserFactory = SubFactory(UserFactory)
-
-    @lazy_attribute
-    def location_id(self):
-        # pylint: disable=no-member
-        return self.location.id
-
-    @lazy_attribute
-    def owner_id(self):
-        # pylint: disable=no-member
-        return self.owner.id
