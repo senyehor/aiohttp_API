@@ -19,10 +19,6 @@ services:
     container_name: db
     image: db_for_api
     restart: unless-stopped
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: root
-      POSTGRES_DB: iot_devices_tracker
 
     volumes:
       - pg_data:/var/lib/postgresql/data
