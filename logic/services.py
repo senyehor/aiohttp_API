@@ -1,6 +1,6 @@
 from typing import Iterable
 
-from logic.config import FIRST_PAGE, DEFAULT_PAGE_SIZE
+from logic.config import DEFAULT_PAGE_SIZE, FIRST_PAGE
 from repository.repositories.bases import CRUDRepositoryBase
 from repository.repositories.implementations import (
     DevicePeeWeeRepository,
@@ -11,6 +11,13 @@ from utils.crud_protocol import CreatedObjectId, CRUDOperationsBase, ModelObject
 
 class CRUDServiceBase(CRUDOperationsBase):
     repository: CRUDRepositoryBase
+
+    def __init__(self, repository: CRUDRepositoryBase = None) -> None:
+        # use the attribute of the instance class
+        # to allow convenient subclassing, with providing default repository
+        self.repository = repository or self.__class__.repository
+        if not self.repository:
+            raise ValueError('repository must be either passed or set at a child class')
 
     async def get_object_by_id(self, object_id: int) -> ModelObject:
         return await self.repository.get_object_by_id(object_id)
@@ -32,12 +39,12 @@ class CRUDServiceBase(CRUDOperationsBase):
 
 
 class UserService(CRUDServiceBase):
-    repository = UserPeeWeeRepository
+    repository = UserPeeWeeRepository()
 
 
 class DeviceService(CRUDServiceBase):
-    repository = DevicePeeWeeRepository
+    repository = DevicePeeWeeRepository()
 
 
 class LocationService(CRUDServiceBase):
-    repository = LocationPeeWeeRepository
+    repository = LocationPeeWeeRepository()
