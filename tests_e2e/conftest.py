@@ -20,6 +20,12 @@ async def flush_db():
     await _flush_db()
 
 
+@pytest_asyncio.fixture()
+async def test_client(aiohttp_client, app):
+    # noinspection PyCallingNonCallable
+    return await aiohttp_client(app)
+
+
 @pytest_asyncio.fixture(scope='module')
 async def app():
     return await create_app()
