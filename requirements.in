@@ -1,10 +1,12 @@
 aiohttp
 gunicorn
 
+
 peewee-async
 aiopg
 
 pytest
+pytest-aiohttp
 pytest-asyncio
 factory_boy
 Faker
