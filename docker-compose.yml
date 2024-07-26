@@ -27,7 +27,6 @@ services:
 
     volumes:
       - pg_data:/var/lib/postgresql/data
-      - ./sample_data.sql:/docker-entrypoint-initdb.d/init.sql
     expose:
       - 5432
 
