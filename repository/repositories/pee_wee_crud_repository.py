@@ -2,7 +2,8 @@ from typing import Iterable
 
 from peewee_async import execute
 
-from repository.repositories.bases import CreatedObjectId, CRUDRepositoryBase, ModelObject
+from repository.repositories.bases import CRUDRepositoryBase
+from utils.crud_protocol import CreatedObjectId, ModelObject
 
 
 class PeeWeeCRUDRepository(CRUDRepositoryBase):
