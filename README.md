@@ -22,4 +22,4 @@ docker compose up
 
 And voila, api will be available on localhost:8080
 
-["example data"](readme_images/img.png)
+!["example data"](readme_images/img.png)
