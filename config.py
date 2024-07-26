@@ -1,5 +1,7 @@
 import os
 
+DEBUG = bool(os.getenv('DEBUG', False))
+
 
 class DBSettings:
     db_user: str = os.getenv('DB_USER')
