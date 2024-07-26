@@ -18,7 +18,7 @@ services:
   db:
     container_name: db
     build:
-      context: db_docker/
+      context: ./
     restart: unless-stopped
     environment:
       POSTGRES_USER: postgres
