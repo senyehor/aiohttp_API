@@ -2,8 +2,8 @@ from typing import Iterable
 
 from peewee_async import execute
 
-from repository.repositories.bases import CRUDRepositoryBase
-from utils.crud_protocol import CreatedObjectId, ModelObject
+from repository.repositories.bases import CRUDRepositoryBase, ModelObject
+from utils.crud_protocol import CreatedObjectId, OperationSucceeded
 
 
 class PeeWeeCRUDRepository(CRUDRepositoryBase):
@@ -31,7 +31,7 @@ class PeeWeeCRUDRepository(CRUDRepositoryBase):
             .paginate(page_number, page_size)
         )
 
-    async def update_object(self, object_id: int, **fields) -> bool:
+    async def update_object(self, object_id: int, **fields) -> OperationSucceeded:
         updated_object_id = await execute(
             self.model_class
             .update(**fields)
@@ -39,7 +39,7 @@ class PeeWeeCRUDRepository(CRUDRepositoryBase):
         )
         return bool(updated_object_id)
 
-    async def delete_object(self, object_id: int) -> bool:
+    async def delete_object(self, object_id: int) -> OperationSucceeded:
         deleted_object_id = await execute(
             self.model_class
             .delete()
