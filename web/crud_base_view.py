@@ -27,7 +27,7 @@ class CRUDViewBase(View):
 
     async def get(self):
         """provides a list of objects"""
-        data_from_user = await self.__get_request_json()
+        data_from_user = await self.__get_request_json(return_empty_dict_on_empty=True)
         if page_number := self.__get_page_number(data_from_user):
             page_size = self.__get_page_size(data_from_user)
             return await self.service.get_objects(page_number, page_size)
@@ -63,10 +63,13 @@ class CRUDViewBase(View):
             return json_response({'success': 'Successfully updated'})
         raise FailedToUpdateObject
 
-    async def __get_request_json(self) -> Json:
+    async def __get_request_json(self, return_empty_dict_on_empty: bool = False) -> Json:
         try:
             return await self.request.json()
         except (JSONDecodeError, TypeError, UnicodeDecodeError) as e:
+            if return_empty_dict_on_empty:
+                if not self.request.body_exists:
+                    return {}
             raise HTTPBadRequest(reason='failed to parse data to json') from e
 
     def __get_object_id(self, data_from_user: Json) -> int:
