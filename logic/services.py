@@ -35,6 +35,9 @@ class CRUDServiceBase(CRUDOperationsBase):
 
     async def get_object_by_id(self, object_id: int, **serializer_kwargs) -> SerializedModel:
         retrieved_object = await self.repository.get_object_by_id(object_id)
+        # force async query object evaluation, because it is lazy but
+        # fails if passed directly to model_to_dict_serializer
+        retrieved_object = [_ for _ in retrieved_object][0]
         return self.model_to_dict_serializer(
             retrieved_object,
             **serializer_kwargs
