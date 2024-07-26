@@ -21,6 +21,12 @@ async def flush_db():
     await _flush_db()
 
 
+@pytest_asyncio.fixture(scope='module')
+async def client():
+    app = await create_app()
+    return await aiohttp_client(app)
+
+
 @pytest.fixture()
 def user():
     return UserFactory()
