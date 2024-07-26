@@ -17,7 +17,7 @@ Json: TypeAlias = dict[str, Any]
 class CRUDViewBase(View):
     service: CRUDServiceBase
 
-    async def get(self, request: Request):
+    async def get(self):
         """provides a list of objects"""
         data_from_user = await request.json()
         if page_number := self.__get_page_number(data_from_user):
@@ -25,13 +25,13 @@ class CRUDViewBase(View):
             return self.service.get_objects(page_number, page_size)
         return await self.service.get_objects()
 
-    async def post(self, request: Request):
+    async def post(self):
         """create an objects"""
         data_from_user = await request.json()
         created_object_id = await self.service.add_object(**data_from_user)
         return Response(text=f'Successfully created, id: {created_object_id}')
 
-    async def delete(self, request: Request):
+    async def delete(self):
         """delete an object"""
         data_from_user = await request.json()
         object_id_to_delete = self.__get_object_id(data_from_user)
@@ -40,7 +40,7 @@ class CRUDViewBase(View):
             return Response(text='Successfully deleted')
         raise FailedToDeleteObject
 
-    async def patch(self, request: Request):
+    async def patch(self):
         """update an object"""
         data_from_user: Json = await request.json()
         object_id_to_update = self.__get_object_id(data_from_user)
